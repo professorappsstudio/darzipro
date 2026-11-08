@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Darzi Pro – The tailor shop app for orders, measurements &amp; payments</title>
+<meta name="description" content="Darzi Pro helps tailors save customer measurements, track orders from pending to delivered, collect payments, print bills and see monthly totals. Works in English and Urdu, right on your phone.">
+<meta name="theme-color" content="#1a1712">
+<link rel="icon" type="image/png" href="playstore_assets/icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Darzi Pro – The tailor shop app">
+<meta property="og:description" content="Measurements, orders, deliveries, payments and bills for your tailoring shop. English &amp; Urdu.">
+<meta name="twitter:card" content="summary">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Darzi Pro",
+  "operatingSystem": "Android",
+  "applicationCategory": "BusinessApplication",
+  "description": "Order, measurement and payment manager for tailors.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PKR" },
+  "downloadUrl": "https://play.google.com/store/apps/details?id=com.professorstudio.darzi_promax"
+}
+</script>
+
+<style>
+:root{
+  --ink:#1a1712; --ink2:#2a251f;
+  --bg:#f8f4ed; --bg2:#f0eadf; --card:#ffffff;
+  --text:#1f1915; --muted:#6f655c; --line:#e7dfd1;
+  --accent:#b4702c; --accent2:#e39a3b; --accentSoft:#f6e8d3;
+  --ok:#0b7a4b; --okSoft:#d3f5e4;
+  --radius:22px;
+  --display:"Fraunces", Georgia, "Times New Roman", serif;
+  --body:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --urdu:"Noto Nastaliq Urdu", "Noto Naskh Arabic", serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14110d; --bg2:#1b1713; --card:#221d18; --text:#f6f1ea; --muted:#a89d92;
+    --line:#332d28; --accentSoft:#3a2b1a; --okSoft:#123d2c; --ok:#4ade9c;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--display);line-height:1.12;letter-spacing:-.01em;font-weight:700}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:72px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.eyebrow::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+.sec-head{max-width:640px;margin-bottom:38px}
+.sec-head h2{font-size:clamp(28px,6vw,42px);margin:10px 0 12px}
+.sec-head p{color:var(--muted);font-size:17px}
+
+/* ------------------------------------------------------------ nav */
+.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:700;font-size:21px}
+.brand img{width:36px;height:36px;border-radius:11px}
+.nav ul{display:none;list-style:none;gap:30px;font-size:15px;font-weight:500;color:var(--muted)}
+.nav ul a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font:600 15px var(--body);padding:12px 20px;border-radius:14px;border:1px solid transparent;cursor:pointer;transition:transform .18s ease,box-shadow .2s ease,background .2s}
+.btn:active{transform:scale(.97)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{box-shadow:0 8px 22px rgba(26,23,18,.28);transform:translateY(-1px)}
+@media (prefers-color-scheme: dark){.btn-dark{background:var(--accent2);color:#1a1712}}
+.btn-sm{padding:9px 16px;font-size:14px;border-radius:12px}
+
+/* ------------------------------------------------------------ hero */
+.hero{padding:44px 0 56px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:520px;height:520px;right:-180px;top:-120px;border-radius:50%;background:radial-gradient(circle,var(--accentSoft),transparent 68%);opacity:.9;z-index:-1}
+.hero-grid{display:grid;gap:44px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;background:var(--accentSoft);color:var(--accent);font-weight:600;font-size:13.5px;padding:7px 14px;border-radius:99px;margin-bottom:20px}
+.pill b{font-family:var(--urdu);font-weight:500}
+.hero h1{font-size:clamp(38px,10vw,64px)}
+.hero h1 em{font-style:normal;color:var(--accent);position:relative;white-space:nowrap}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:.14em;background:var(--accent2);opacity:.35;border-radius:4px;transform-origin:left;animation:draw 1s .5s both ease-out}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.hero p.lead{margin:20px 0 28px;font-size:18px;color:var(--muted);max-width:520px}
+.stores{display:flex;flex-wrap:wrap;gap:20px 14px}
+.store{display:flex;align-items:center;gap:12px;background:#000;color:#fff;border-radius:15px;padding:10px 20px 10px 16px;min-width:176px;border:1px solid #3a3a3a;transition:transform .18s,box-shadow .2s;position:relative}
+.store svg{width:28px;height:28px;flex:none;fill:#fff}
+.store small{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.78;line-height:1.2}
+.store strong{display:block;font-size:19px;font-weight:600;line-height:1.2;font-family:var(--body)}
+a.store:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.28)}
+.store.soon{cursor:not-allowed;opacity:.9}
+.store.soon .tag{position:absolute;top:-9px;right:-6px;background:var(--accent2);color:#1a1712;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:99px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;color:var(--muted);font-size:14px}
+.trust span{display:inline-flex;align-items:center;gap:7px}
+.trust svg{width:16px;height:16px;stroke:var(--ok);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ------------------------------------------------------- phone mock */
+.stage{position:relative;display:flex;justify-content:center;padding:10px 0 20px}
+.phone{width:min(285px,74vw);aspect-ratio:9/18.6;background:#0e0c09;border-radius:42px;padding:10px;box-shadow:0 40px 70px -20px rgba(26,23,18,.55),0 0 0 2px #2c2620 inset;position:relative;animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.phone::before{content:"";position:absolute;top:14px;left:50%;width:78px;height:20px;border-radius:12px;background:#0e0c09;transform:translateX(-50%);z-index:3}
+.screen{height:100%;background:#f8f4ed;border-radius:33px;overflow:hidden;padding:42px 14px 14px;color:#1f1915;font-size:10.5px;line-height:1.35;display:flex;flex-direction:column;gap:9px}
+.screen h4{font-family:var(--display);font-size:19px;line-height:1.1;font-weight:700}
+.s-actions{display:flex;gap:6px}
+.s-actions span{flex:1;text-align:center;padding:7px 4px;border-radius:10px;font-weight:600;font-size:10px;background:#2e241e;color:#fff}
+.s-actions span+span{background:#fff;color:#2e241e;border:1px solid #e9e3d8}
+.s-month{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #e9e3d8;border-radius:12px;padding:6px 9px;font-weight:700;font-size:10.5px}
+.s-month i{font-style:normal;background:#f0ebe3;width:20px;height:20px;border-radius:7px;display:grid;place-items:center;font-size:12px}
+.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.s-stat{background:#fff;border:1px solid #e9e3d8;border-radius:12px;padding:8px 9px}
+.s-stat small{color:#7c7168;font-size:9.5px;display:block}
+.s-stat b{font-family:var(--display);font-size:15px;display:block;margin-top:2px}
+.s-stat.g b{color:#0b7a4b}.s-stat.r b{color:#d13438}
+.s-order{background:#fff;border:1px solid #e9e3d8;border-radius:13px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.s-order strong{display:block;font-size:11px}
+.s-order small{color:#7c7168;font-size:9.5px}
+.chip{font-size:9px;font-weight:700;padding:3px 8px;border-radius:99px;white-space:nowrap}
+.chip.proc{background:#fdf0c2;color:#8a5a00}.chip.done{background:#d5f0ee;color:#0f6b66}.chip.del{background:#d3f5e4;color:#0b7a4b}
+.float{position:absolute;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 14px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 18px 34px -12px rgba(26,23,18,.3);animation:float 5s ease-in-out infinite}
+.float .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--okSoft);color:var(--ok)}
+.float.a{left:-6px;top:57%;animation-delay:-1.5s}
+.float.b{right:-6px;bottom:7%;animation-delay:-3s}
+.float.b .ic{background:var(--accentSoft);color:var(--accent)}
+.float svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------------------------------------------------------- strip */
+.strip{padding:0}
+.strip .wrap{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.strip div{background:var(--card);padding:22px 18px;text-align:center}
+.strip b{display:block;font-family:var(--display);font-size:26px;color:var(--accent)}
+.strip span{font-size:13.5px;color:var(--muted)}
+
+/* ------------------------------------------------------- features */
+.features{display:grid;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 22px 40px -22px rgba(26,23,18,.35);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+.ico{width:48px;height:48px;border-radius:15px;background:var(--accentSoft);color:var(--accent);display:grid;place-items:center;margin-bottom:18px}
+.ico svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:21px;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15.5px}
+
+/* ------------------------------------------------------- workflow */
+.dark{background:var(--ink);color:#f6f1ea;border-radius:34px;margin:0 12px}
+.dark .sec-head p{color:#b8ada2}
+.dark .eyebrow{color:var(--accent2)}
+.steps{display:grid;gap:14px;counter-reset:s}
+.step{position:relative;background:var(--ink2);border:1px solid #3a332b;border-radius:20px;padding:22px 22px 22px 74px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;left:20px;top:22px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 17px var(--display);background:var(--accent2);color:#1a1712}
+.step h3{font-size:19px;margin-bottom:4px}
+.step p{color:#b8ada2;font-size:15px}
+.step .chip{display:inline-block;margin-bottom:8px;font-size:11.5px}
+.note{margin-top:22px;color:#b8ada2;font-size:14.5px;display:flex;gap:10px;align-items:flex-start}
+.note svg{width:18px;height:18px;flex:none;margin-top:3px;stroke:var(--accent2);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ------------------------------------------------- measurements demo */
+.split{display:grid;gap:36px;align-items:center}
+.types{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
+.types span{padding:8px 14px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600}
+.types span:nth-child(1){background:var(--accentSoft);border-color:var(--accent);color:var(--accent)}
+.demo{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:0 30px 50px -30px rgba(26,23,18,.4)}
+.demo h4{font-family:var(--display);font-size:19px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.demo h4 small{font:600 12px var(--body);color:var(--muted)}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px}
+.f .in{height:42px;border:1px solid var(--line);background:var(--bg);border-radius:13px;padding:0 13px;display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500}
+.f .in.sel{border-color:var(--accent);color:var(--text)}
+.f .in svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2.2}
+.f .in.on{background:var(--accentSoft);border-color:var(--accent);justify-content:flex-start;gap:10px;font-weight:600}
+.box{width:22px;height:22px;border-radius:7px;background:var(--accent);display:grid;place-items:center}
+.box svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:3}
+.ticks{list-style:none;margin-top:18px;display:grid;gap:10px}
+.ticks li{display:flex;gap:11px;color:var(--muted);font-size:15.5px}
+.ticks svg{width:20px;height:20px;flex:none;margin-top:3px;stroke:var(--ok);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------------------------------------------------------- urdu */
+.urdu{background:linear-gradient(135deg,var(--accentSoft),var(--bg2));border:1px solid var(--line);border-radius:30px;padding:32px 26px;display:grid;gap:24px;align-items:center}
+.urdu h2{font-size:clamp(26px,5.5vw,38px)}
+.urdu p{color:var(--muted);margin-top:10px}
+.ur-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;direction:rtl;font-family:var(--urdu);line-height:2.1}
+.ur-card h3{font-family:var(--urdu);font-size:24px;font-weight:700;margin-bottom:8px}
+.ur-card p{margin:0;color:var(--text);font-size:16px}
+.ur-card .row{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--line);margin-top:10px;padding-top:6px;font-size:15px}
+.ur-card .row b{color:var(--accent);font-family:var(--body);direction:ltr}
+
+/* ----------------------------------------------------------- how */
+.how{display:grid;gap:16px}
+.how .card{padding-top:30px;position:relative}
+.how .n{position:absolute;top:-16px;left:24px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font:700 16px var(--display);box-shadow:0 8px 16px -6px var(--accent)}
+.how .card{margin-top:16px}
+
+/* ----------------------------------------------------------- faq */
+.faq{max-width:760px;display:grid;gap:12px}
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:0 22px;transition:border-color .2s}
+details[open]{border-color:var(--accent)}
+summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:600;font-size:16.5px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:500 26px/1 var(--body);color:var(--accent);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:var(--muted);font-size:15.5px}
+details a{color:var(--accent);font-weight:600;text-decoration:underline}
+
+/* ----------------------------------------------------------- cta */
+.cta{background:var(--ink);color:#fff;border-radius:34px;padding:46px 26px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;inset:auto -60px -140px auto;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(227,154,59,.45),transparent 68%)}
+.cta img{width:76px;height:76px;border-radius:22px;margin:0 auto 20px;box-shadow:0 14px 30px rgba(0,0,0,.4)}
+.cta h2{font-size:clamp(28px,6.5vw,44px);margin-bottom:12px}
+.cta p{color:#b8ada2;max-width:520px;margin:0 auto 26px}
+.cta .stores{justify-content:center;position:relative}
+.cta .store{background:#fff;color:#000;border-color:#fff}
+.cta .store svg{fill:#000}
+.cta .store.soon{background:#2a251f;color:#fff;border-color:#4a4137}
+.cta .store.soon svg{fill:#fff}
+
+/* -------------------------------------------------------- footer */
+footer{padding:44px 0 40px;color:var(--muted);font-size:14.5px}
+footer .wrap{display:grid;gap:22px}
+footer .links{display:flex;flex-wrap:wrap;gap:8px 24px;font-weight:500}
+footer .links a:hover{color:var(--accent)}
+footer .brand{color:var(--text)}
+
+/* ------------------------------------------------------ reveal */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+/* --------------------------------------------------- wider screens */
+@media (min-width:640px){
+  .strip .wrap{grid-template-columns:repeat(4,1fr)}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .how{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .urdu{grid-template-columns:1.1fr 1fr;padding:40px}
+}
+@media (min-width:900px){
+  .nav ul{display:flex}
+  section{padding:96px 0}
+  .hero{padding:70px 0 90px}
+  .hero-grid{grid-template-columns:1.1fr .9fr}
+  .features{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:repeat(4,1fr)}
+  .step{padding:74px 20px 22px}
+  .step::before{left:20px;top:22px}
+  .split{grid-template-columns:1fr 1fr;gap:64px}
+  .dark{margin:0 24px;border-radius:44px}
+  .cta{padding:70px 40px}
+  footer .wrap{grid-template-columns:1fr auto;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- =============================================================== NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Darzi Pro home">
+      <img src="playstore_assets/icon.png" alt="" width="36" height="36">
+      Darzi Pro
+    </a>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#measurements">Measurements</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-dark btn-sm" href="https://play.google.com/store/apps/details?id=com.professorstudio.darzi_promax" target="_blank" rel="noopener">Get the app</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============================================================= HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill rv">Made for tailors &middot; English &amp; <b>اردو</b></span>
+      <h1 class="rv d1">Your whole tailoring shop, <em>in your pocket.</em></h1>
+      <p class="lead rv d2">Save every customer's measurements once, track each order from pending to delivered, collect payments and print the bill. No registers, no lost slips.</p>
+      <div class="stores rv d3">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.professorstudio.darzi_promax" target="_blank" rel="noopener" aria-label="Get Darzi Pro on Google Play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+          <span><small>Get it on</small><strong>Google Play</strong></span>
+        </a>
+        <div class="store soon" role="button" aria-disabled="true" aria-label="App Store version coming soon">
+          <span class="tag">Coming soon</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <span><small>Download on the</small><strong>App Store</strong></span>
+        </div>
+      </div>
+      <div class="trust rv d3">
+        <span><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Free to use</span>
+        <span><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Your data stays on your phone</span>
+        <span><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Light &amp; dark mode</span>
+      </div>
+    </div>
+
+    <div class="stage rv d2" aria-hidden="true">
+      <div class="phone">
+        <div class="screen">
+          <h4>Welcome back, Abubaker</h4>
+          <div class="s-actions"><span>+ New order</span><span>Add customer</span></div>
+          <div class="s-month"><i>‹</i> October 2026 ▾ <i>›</i></div>
+          <div class="s-grid">
+            <div class="s-stat"><small>Orders</small><b>24</b></div>
+            <div class="s-stat"><small>Billed</small><b>Rs 86,400</b></div>
+            <div class="s-stat g"><small>Collected</small><b>Rs 61,000</b></div>
+            <div class="s-stat r"><small>Outstanding</small><b>Rs 25,400</b></div>
+          </div>
+          <div class="s-order"><div><strong>ORD-1024 · Yasir</strong><small>Shalwar Kameez × 2</small></div><span class="chip proc">Processing</span></div>
+          <div class="s-order"><div><strong>ORD-1023 · Bilal</strong><small>Waistcoat × 1</small></div><span class="chip done">Completed</span></div>
+          <div class="s-order"><div><strong>ORD-1022 · Hamza</strong><small>Sherwani × 1</small></div><span class="chip del">Delivered</span></div>
+        </div>
+      </div>
+      <div class="float a"><span class="ic"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Order delivered</div>
+      <div class="float b"><span class="ic"><svg viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v6H7z"/></svg></span>Print bill</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ STRIP -->
+<section class="strip">
+  <div class="wrap rv">
+    <div><b>3 taps</b><span>to place an order</span></div>
+    <div><b>2 languages</b><span>English &amp; اردو</span></div>
+    <div><b>100%</b><span>private on your phone</span></div>
+    <div><b>Any field</b><span>build your own form</span></div>
+  </div>
+</section>
+
+<!-- ======================================================== FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Features</span>
+      <h2>Everything a tailor needs, nothing he doesn't.</h2>
+      <p>Built with working darzis in mind: quick to learn, fast to use at the counter, clear to read.</p>
+    </div>
+    <div class="features">
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 3 3 6-6 4 4M3 7h5M3 12h2"/><rect x="2" y="3" width="20" height="18" rx="3"/></svg></div>
+        <h3>Measurements, your way</h3>
+        <p>Number, text, dropdown or tick box. Add collar styles, pocket types or any field your shop uses and change it any time.</p>
+      </article>
+      <article class="card rv d1">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></div>
+        <h3>Clear order workflow</h3>
+        <p>Pending, processing, completed, then delivered. One obvious button for the next step, so nothing gets missed.</p>
+      </article>
+      <article class="card rv d2">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 7h18v10H3zM3 11h18M7 15h3"/></svg></div>
+        <h3>Payments &amp; balance</h3>
+        <p>Take an advance, record payments and always see what is still due. The app never lets you over-collect.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8"/></svg></div>
+        <h3>Partial deliveries</h3>
+        <p>Hand over two suits now and the third later. Plus and minus per garment, and the amount is checked for you.</p>
+      </article>
+      <article class="card rv d1">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v6H7z"/></svg></div>
+        <h3>Print the bill</h3>
+        <p>Print an order slip at any stage, with or without measurements. After the last delivery the app offers to print.</p>
+      </article>
+      <article class="card rv d2">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></div>
+        <h3>Monthly tracking</h3>
+        <p>Flip through months on the dashboard and see orders, billed, collected and outstanding amounts at a glance.</p>
+      </article>
+      <article class="card rv">
+        <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div>
+        <h3>English &amp; Urdu</h3>
+        <p>Switch the whole app to Urdu with a readable Nastaliq font, including right-to-left layout.</p>
+      </article>
+      <article class="card rv d1">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></div>
+        <h3>Light &amp; dark</h3>
+        <p>A calm, easy-on-the-eyes design that works in a bright shop or late at night.</p>
+      </article>
+      <article class="card rv d2">
+        <div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Private by design</h3>
+        <p>Customer and order data is stored on your own phone. No account on our servers, no ads, no tracking.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== WORKFLOW -->
+<section id="workflow" class="dark">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Order workflow</span>
+      <h2>From the first measurement to the final delivery.</h2>
+      <p>Every order moves forward one clear step at a time, and your records stay safe.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv"><span class="chip" style="background:#332e29;color:#a89d92">Pending</span><h3>Order placed</h3><p>Pick the customer, add garments, set a delivery date and take an advance.</p></div>
+      <div class="step rv d1"><span class="chip proc">Processing</span><h3>Stitching starts</h3><p>One tap on "Start processing" when work begins on the order.</p></div>
+      <div class="step rv d2"><span class="chip done">Completed</span><h3>Ready for pickup</h3><p>Mark it completed when the garments are finished. Delivery unlocks now.</p></div>
+      <div class="step rv d3"><span class="chip del">Delivered</span><h3>Handed over</h3><p>Deliver everything, or only some garments. Collect the exact balance on the last one.</p></div>
+    </div>
+    <p class="note rv"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Delivered and partly delivered orders are locked and cannot be deleted, so your books always add up.</p>
+  </div>
+</section>
+
+<!-- ==================================================== MEASUREMENTS -->
+<section id="measurements">
+  <div class="wrap split">
+    <div>
+      <div class="rv">
+        <span class="eyebrow">Your measurement form</span>
+        <h2 style="font-size:clamp(28px,6vw,42px);margin:10px 0 12px">Your format. Today and tomorrow.</h2>
+        <p style="color:var(--muted);font-size:17px">Every shop measures a little differently. Build the form that matches yours and change it whenever your style changes.</p>
+      </div>
+      <div class="types rv d1"><span>Number</span><span>Text</span><span>Dropdown</span><span>Checkbox</span></div>
+      <ul class="ticks rv d2">
+        <li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Collar style: Collar, Ban, Cut ban, Plain, None. You write the options.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Front pocket: a simple tick box.</li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Each order keeps the measurements it was placed with, even if the customer's change later.</li>
+      </ul>
+    </div>
+    <div class="demo rv d1" aria-hidden="true">
+      <h4>New order <small>Measurements</small></h4>
+      <div class="fields">
+        <div class="f"><label>Length (in)</label><div class="in">42</div></div>
+        <div class="f"><label>Chest (in)</label><div class="in">40</div></div>
+        <div class="f"><label>Collar style</label><div class="in sel">Ban <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="f"><label>Side pocket</label><div class="in sel">Double <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div></div>
+        <div class="f"><label>Front pocket</label><div class="in on"><span class="box"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Yes</div></div>
+        <div class="f"><label>Sleeve (in)</label><div class="in">24.5</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ URDU -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="urdu rv">
+      <div>
+        <span class="eyebrow">Bilingual</span>
+        <h2 style="margin:10px 0 0">Speaks your language.</h2>
+        <p>Use Darzi Pro in English or Urdu. The whole app, including the layout, switches in one tap and uses an easy-to-read Nastaliq font.</p>
+      </div>
+      <div class="ur-card" lang="ur" dir="rtl">
+        <h3>آرڈر مکمل ہو گیا</h3>
+        <p>گاہک: یاسر</p>
+        <div class="row"><span>کل بل</span><b>Rs 4,500</b></div>
+        <div class="row"><span>بقایا</span><b>Rs 0</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== HOW -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Get started</span>
+      <h2>Ready in a few minutes.</h2>
+    </div>
+    <div class="how">
+      <div class="card rv"><span class="n">1</span><h3>Set up your shop</h3><p>Add your shop name and price list. You can change both later in Settings.</p></div>
+      <div class="card rv d1"><span class="n">2</span><h3>Add customers</h3><p>Save their contact details and measurements once, ready for every future order.</p></div>
+      <div class="card rv d2"><span class="n">3</span><h3>Take orders</h3><p>Place orders, track progress, collect payments and print bills from one place.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== FAQ -->
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">FAQ</span>
+      <h2>Questions, answered.</h2>
+    </div>
+    <div class="faq rv">
+      <details>
+        <summary>Is Darzi Pro free?</summary>
+        <p>Yes. You can download and use Darzi Pro for free.</p>
+      </details>
+      <details>
+        <summary>Where is my data stored?</summary>
+        <p>On your own phone. Your customers, measurements and orders are not uploaded to our servers. Because of that, uninstalling the app or clearing its data removes them, so please keep your phone safe. Read the <a href="privacy.html">Privacy Policy</a> for details.</p>
+      </details>
+      <details>
+        <summary>Does it work without internet?</summary>
+        <p>Yes, for your daily work. The app only needs a connection to download its fonts the first time you open it.</p>
+      </details>
+      <details>
+        <summary>Can I print bills?</summary>
+        <p>Yes. Open any order and tap Print. You can send it to a printer or save it as a PDF, and choose whether to include measurements.</p>
+      </details>
+      <details>
+        <summary>Is there an iPhone version?</summary>
+        <p>The App Store version is coming soon. For now, Darzi Pro is available on Google Play for Android phones.</p>
+      </details>
+      <details>
+        <summary>How do I contact you?</summary>
+        <p>Write to <a href="mailto:support@yourdomain.com">support@yourdomain.com</a> and we will get back to you.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== CTA -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="cta rv">
+      <img src="playstore_assets/icon.png" alt="Darzi Pro app icon" width="76" height="76">
+      <h2>Run your shop with Darzi Pro.</h2>
+      <p>Download it today and leave the paper registers behind.</p>
+      <div class="stores">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.professorstudio.darzi_promax" target="_blank" rel="noopener" aria-label="Get Darzi Pro on Google Play">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.018 13.298l-3.919 2.218-3.515-3.493 3.543-3.521 3.891 2.202a1.49 1.49 0 0 1 0 2.594zM1.337.924a1.486 1.486 0 0 0-.112.568v21.017c0 .217.045.419.124.6l11.155-11.087L1.337.924zm12.207 10.065l3.258-3.238L3.45.195a1.466 1.466 0 0 0-.946-.179l11.04 10.973zm0 2.067l-11 10.933c.298.036.612-.016.906-.183l13.324-7.54-3.23-3.21z"/></svg>
+          <span><small>Get it on</small><strong>Google Play</strong></span>
+        </a>
+        <div class="store soon" role="button" aria-disabled="true" aria-label="App Store version coming soon">
+          <span class="tag">Coming soon</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+          <span><small>Download on the</small><strong>App Store</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================================================== FOOTER -->
+<footer>
+  <div class="wrap">
+    <div>
+      <a class="brand" href="#top"><img src="playstore_assets/icon.png" alt="" width="36" height="36">Darzi Pro</a>
+      <p style="margin-top:10px">The tailor shop app for orders, measurements and payments.</p>
+      <p style="margin-top:6px">&copy; <span id="year">2026</span> Professor Studio. All rights reserved.</p>
+    </div>
+    <nav class="links" aria-label="Footer">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:support@yourdomain.com">Contact</a>
+      <a href="https://play.google.com/store/apps/details?id=com.professorstudio.darzi_promax" target="_blank" rel="noopener">Google Play</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 8); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+
+  var els = document.querySelectorAll('.rv');
+  if (!('IntersectionObserver' in window)) { els.forEach(function(e){ e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>
